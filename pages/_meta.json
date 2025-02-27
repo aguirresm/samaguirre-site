@@ -1,15 +1,15 @@
 {
-  "index": "Introduction",
+  "index": "Welcome",
   "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
+  "advanced": "CCNP ENCOR Labs",
   "about": {
     "title": "About",
     "type": "page"
   },
   "contact": {
-    "title": "Contact ↗",
+    "title": "LinkedIn ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://linkedin.com/samuelmaguirre",
     "newWindow": true
   }
 }
