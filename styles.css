@@ -1,0 +1,218 @@
+:root {
+  --ink: #161513;
+  --muted: rgba(22, 21, 19, 0.58);
+  --line: rgba(22, 21, 19, 0.12);
+  --page: #f4f1ea;
+  --surface: #faf8f3;
+  --accent: #3a5a40;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f3f0e8;
+    --muted: rgba(243, 240, 232, 0.58);
+    --line: rgba(243, 240, 232, 0.12);
+    --page: #0b0b0a;
+    --surface: #141412;
+    --accent: #8fbf8a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1 0 auto; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  background: var(--page);
+  border-bottom: 1px solid transparent;
+}
+
+.nav-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-size: 15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 220px);
+  padding: 72px 0 56px;
+}
+
+.hero .container {
+  text-align: left;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+
+.display {
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.accent { color: var(--accent); }
+
+.lede {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 36ch;
+  margin: 0 0 32px;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--page);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.whisper {
+  padding: 0 0 80px;
+}
+
+.whisper-kicker {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.whisper-body {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 42ch;
+  margin: 0;
+}
+
+.whisper-body a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 22px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer nav {
+  display: flex;
+  gap: 18px;
+}
+
+.footer a:hover { color: var(--ink); }
+
+.legal {
+  padding: 48px 0 96px;
+}
+
+.legal h1 {
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+}
+
+.legal h2 {
+  font-size: 18px;
+  margin: 28px 0 8px;
+}
+
+.legal p, .legal li {
+  color: var(--muted);
+}
+
+.legal a {
+  color: var(--accent);
+}
+
+.legal-back {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
