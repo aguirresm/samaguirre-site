@@ -142,28 +142,43 @@ a {
   border: 1px solid var(--line);
 }
 
-.whisper {
+.work {
   padding: 0 0 80px;
 }
 
-.whisper-kicker {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 8px;
-}
-
-.whisper-body {
-  font-size: 17px;
-  color: var(--muted);
-  max-width: 42ch;
+.work-list {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.whisper-body a {
-  color: var(--ink);
+.work-item {
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+
+.work-item:last-child {
   border-bottom: 1px solid var(--line);
+}
+
+.work-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-name:hover {
+  border-bottom-color: var(--ink);
+}
+
+.work-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 8px 0 0;
 }
 
 .footer {
