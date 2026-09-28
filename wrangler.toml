@@ -1,0 +1,9 @@
+name = "samaguirre"
+pages_build_output_dir = "."
+compatibility_date = "2025-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "samaguirre-new-home"
+database_id = "a1a4aec7-c79a-4086-8ae6-ac1bf4f4c4dd"
+migrations_dir = "migrations"

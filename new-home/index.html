@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>New Home Checklist</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/new-home/app.css">
+</head>
+<body>
+
+<header class="wrap hero">
+  <div>
+    <p class="eyebrow">New home checklist</p>
+    <h1>Everything the new place needs</h1>
+    <p class="lede">Go room by room and mark each item as <b class="t-have">Have</b>, <b class="t-need">Need</b>, or <b class="t-skip">Skip</b>. Anything marked Need goes onto the shopping list. Answers are shared, so everyone with the passcode sees the same list.</p>
+  </div>
+  <div class="summary" aria-live="polite">
+    <div class="summary-top">
+      <p class="eyebrow">Answered</p>
+      <span class="pct" id="pct">0%</span>
+    </div>
+    <div class="bar"><i id="pctBar"></i></div>
+    <div class="stats">
+      <div class="stat have"><b id="statHave">0</b><span>Have</span></div>
+      <div class="stat need"><b id="statNeed">0</b><span>Need</span></div>
+      <div class="stat skip"><b id="statSkip">0</b><span>Skipped</span></div>
+      <div class="stat"><b id="statOpen">0</b><span>Left</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="list" aria-selected="true">Checklist</button>
+      <button class="tab" role="tab" data-view="quiz" aria-selected="false">Quiz mode</button>
+      <button class="tab" role="tab" data-view="shop" aria-selected="false">Shopping list <span class="badge zero" id="shopBadge">0</span></button>
+    </div>
+    <div class="tool-right">
+      <span class="sync" id="syncStatus" data-kind="busy" aria-live="polite">Loading</span>
+      <label class="switch"><input type="checkbox" id="essentialsToggle"><span class="track"></span>Essentials only</label>
+      <button class="btn ghost" id="resetBtn">Reset</button>
+      <button class="btn ghost" id="signOutBtn">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="listView" class="layout">
+    <nav class="side" id="sideNav" aria-label="Areas"></nav>
+    <div>
+      <div class="list-tools">
+        <div class="chips" id="filterChips">
+          <button class="chip" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" data-filter="open" aria-pressed="false">Unanswered</button>
+          <button class="chip" data-filter="have" aria-pressed="false">Have</button>
+          <button class="chip" data-filter="need" aria-pressed="false">Need</button>
+          <button class="chip" data-filter="skip" aria-pressed="false">Skipped</button>
+        </div>
+        <input type="search" class="search" id="search" placeholder="Search items" aria-label="Search items">
+      </div>
+      <div id="sections"></div>
+      <div class="empty" id="emptyList" hidden>
+        <h3>Nothing here</h3>
+        <p>No items match these filters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="quizView" class="quiz" hidden>
+    <div class="quiz-top">
+      <select class="select" id="quizScope" aria-label="Area to quiz"></select>
+      <span class="quiz-progress" id="quizProgress"></span>
+    </div>
+    <div class="bar"><i id="quizBar"></i></div>
+    <div class="card" id="quizCard"></div>
+    <div class="quiz-foot">
+      <button class="btn ghost" id="quizBack">&larr; Back</button>
+      <span>Keys: <kbd>1</kbd> have &nbsp;<kbd>2</kbd> need &nbsp;<kbd>3</kbd> skip &nbsp;<kbd>&larr;</kbd> back</span>
+    </div>
+  </div>
+
+  <div id="shopView" class="shop" hidden>
+    <div class="shop-head">
+      <div>
+        <p class="eyebrow">Shopping list</p>
+        <h2 id="shopTitle">Nothing to buy yet</h2>
+        <p id="shopSub"></p>
+      </div>
+      <div class="shop-actions">
+        <button class="btn" id="moveBought" hidden>Move checked to Have</button>
+        <button class="btn" id="copyList">Copy as text</button>
+        <button class="btn primary" id="printList">Print</button>
+      </div>
+    </div>
+    <div class="shop-opts">
+      <label class="switch"><input type="checkbox" id="includeOpen"><span class="track"></span>Include unanswered items</label>
+    </div>
+    <div id="shopList"></div>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="/new-home/app.js"></script>
+</body>
+</html>
