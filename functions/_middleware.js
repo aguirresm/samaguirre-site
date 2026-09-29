@@ -6,6 +6,8 @@ const API = `${BASE}/api/`;
 const COOKIE = "nh_session";
 const SESSION_TTL_S = 60 * 60 * 24 * 30;
 const MAX_FAILS = 8;
+// The passcode is only 4 digits, so wrong guesses are also capped across all IPs.
+const GLOBAL_MAX_FAILS = 20;
 const FAIL_WINDOW_MS = 15 * 60 * 1000;
 const MAX_BODY = 64 * 1024;
 const STATUSES = new Set(["have", "need", "skip"]);
@@ -53,9 +55,13 @@ async function handleLogin(request, env) {
 
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
   const now = Date.now();
-  const row = await env.DB.prepare("SELECT fails, window_start FROM login_attempts WHERE ip = ?1").bind(ip).first();
+  const [ipResult, globalResult] = await env.DB.batch([
+    env.DB.prepare("SELECT fails, window_start FROM login_attempts WHERE ip = ?1").bind(ip),
+    env.DB.prepare("SELECT COALESCE(SUM(fails), 0) AS total FROM login_attempts WHERE window_start > ?1").bind(now - FAIL_WINDOW_MS),
+  ]);
+  const row = ipResult.results[0];
   const inWindow = row && now - row.window_start < FAIL_WINDOW_MS;
-  if (inWindow && row.fails >= MAX_FAILS) {
+  if ((inWindow && row.fails >= MAX_FAILS) || globalResult.results[0].total >= GLOBAL_MAX_FAILS) {
     return loginPage("Too many attempts. Try again in 15 minutes.", 429);
   }
 
@@ -136,6 +142,8 @@ function readCookie(request, name) {
 }
 
 function sameOrigin(request) {
+  const site = request.headers.get("Sec-Fetch-Site");
+  if (site) return site === "same-origin";
   return request.headers.get("Origin") === new URL(request.url).origin;
 }
 
@@ -242,7 +250,7 @@ const BASE_HEADERS = {
   "Cache-Control": "no-store",
   "X-Robots-Tag": "noindex, nofollow",
   "X-Content-Type-Options": "nosniff",
-  "Referrer-Policy": "no-referrer",
+  "Referrer-Policy": "same-origin",
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 };
 
@@ -285,7 +293,7 @@ function loginPage(error = "", status = 200) {
   p.lede { margin: 0 0 24px; color: #6f6a62; }
   label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
   input {
-    width: 100%; font: inherit; font-size: 17px; letter-spacing: .08em; text-transform: uppercase;
+    width: 100%; font: inherit; font-size: 22px; letter-spacing: .4em; text-align: center;
     padding: 11px 14px; border: 1px solid #e6e0d6; border-radius: 12px; background: #fff; outline: none;
   }
   input:focus { border-color: #2f5d50; box-shadow: 0 0 0 3px #e3ece8; }
@@ -301,10 +309,10 @@ function loginPage(error = "", status = 200) {
 <main>
   <p class="eyebrow">Private</p>
   <h1>New home checklist</h1>
-  <p class="lede">Enter the passcode Sam shared with you.</p>
+  <p class="lede">Enter the 4-digit code Sam shared with you.</p>
   <form method="post" action="${BASE}/login">
-    <label for="passcode">Passcode</label>
-    <input id="passcode" name="passcode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" required autofocus>
+    <label for="passcode">Code</label>
+    <input id="passcode" name="passcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" required autofocus>
     <button type="submit">Open checklist</button>
     ${error ? `<p class="error" role="alert">${error}</p>` : ""}
   </form>
