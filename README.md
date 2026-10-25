@@ -6,8 +6,6 @@ Live (GitHub Pages): https://aguirresm.github.io/samaguirre-site/
 
 Production domain: https://www.samaguirre.com/ (Cloudflare Pages + Cloudflare DNS)
 
-LinkedIn: https://www.linkedin.com/in/samuelmaguirre
-
 GymSaver: https://gymsaver.app
 
 ## Deploy
